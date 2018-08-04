@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
  * Created by Jordan on 7/8/2017.
  */
 
-
 public class MissDistance {
 
     @SerializedName("astronomical")

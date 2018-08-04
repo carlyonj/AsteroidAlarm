@@ -1,8 +1,14 @@
 package AsteroidData;
 
+import android.util.Log;
+
+import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,8 +17,8 @@ import java.util.List;
 
 public class DateSampled {
 
-    @SerializedName("2015-09-11")
-    @Expose
+    //@SerializedName("2015-09-11")
+    //@Expose
     private List<Asteroid> asteroids;
 
     public List<Asteroid> getAsteroids() {

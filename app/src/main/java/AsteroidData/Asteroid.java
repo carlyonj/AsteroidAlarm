@@ -10,38 +10,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class Asteroid {
 
-//    @SerializedName("links")
-//    @Expose
-//    private Links links;
     @SerializedName("neo_reference_id")
     @Expose
     private String neoReferenceId;
     @SerializedName("name")
     @Expose
     private String name;
-//    @SerializedName("nasa_jpl_url")
-//    @Expose
-//    private String nasaJplUrl;
-//    @SerializedName("absolute_magnitude_h")
-//    @Expose
-//    private Double absoluteMagnitudeH;
-//    @SerializedName("estimated_diameter")
-//    @Expose
-//    private EstimatedDiameter estimatedDiameter;
+    @SerializedName("nasa_jpl_url")
+    @Expose
+    private String nasaJplUrl;
+    @SerializedName("absolute_magnitude_h")
+    @Expose
+    private Double absoluteMagnitudeH;
+    @SerializedName("estimated_diameter")
+    @Expose
+    private EstimatedDiameter estimatedDiameter;
     @SerializedName("is_potentially_hazardous_asteroid")
     @Expose
     private Boolean isPotentiallyHazardousAsteroid;
     @SerializedName("close_approach_data")
     @Expose
     private List<CloseApproachDatum> closeApproachData = null;
-
-//    public Links getLinks() {
-//        return links;
-//    }
-//
-//    public void setLinks(Links links) {
-//        this.links = links;
-//    }
 
     public String getNeoReferenceId() {
         return neoReferenceId;
@@ -59,29 +48,29 @@ public class Asteroid {
         this.name = name;
     }
 
-//    public String getNasaJplUrl() {
-//        return nasaJplUrl;
-//    }
-//
-//    public void setNasaJplUrl(String nasaJplUrl) {
-//        this.nasaJplUrl = nasaJplUrl;
-//    }
-//
-//    public Double getAbsoluteMagnitudeH() {
-//        return absoluteMagnitudeH;
-//    }
-//
-//    public void setAbsoluteMagnitudeH(Double absoluteMagnitudeH) {
-//        this.absoluteMagnitudeH = absoluteMagnitudeH;
-//    }
-//
-//    public EstimatedDiameter getEstimatedDiameter() {
-//        return estimatedDiameter;
-//    }
-//
-//    public void setEstimatedDiameter(EstimatedDiameter estimatedDiameter) {
-//        this.estimatedDiameter = estimatedDiameter;
-//    }
+    public String getNasaJplUrl() {
+        return nasaJplUrl;
+    }
+
+    public void setNasaJplUrl(String nasaJplUrl) {
+        this.nasaJplUrl = nasaJplUrl;
+    }
+
+    public Double getAbsoluteMagnitudeH() {
+        return absoluteMagnitudeH;
+    }
+
+    public void setAbsoluteMagnitudeH(Double absoluteMagnitudeH) {
+        this.absoluteMagnitudeH = absoluteMagnitudeH;
+    }
+
+    public EstimatedDiameter getEstimatedDiameter() {
+        return estimatedDiameter;
+    }
+
+    public void setEstimatedDiameter(EstimatedDiameter estimatedDiameter) {
+        this.estimatedDiameter = estimatedDiameter;
+    }
 
     public Boolean getIsPotentiallyHazardousAsteroid() {
         return isPotentiallyHazardousAsteroid;

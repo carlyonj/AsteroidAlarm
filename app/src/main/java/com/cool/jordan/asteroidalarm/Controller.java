@@ -5,7 +5,10 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import AsteroidData.Asteroid;
 import AsteroidData.AsteroidMetaData;
@@ -21,7 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Controller implements Callback<AsteroidMetaData> {
 
-    static final String BASE_URL = "https://api.nasa.gov/neo/rest/v1/";
+    private static final String BASE_URL = "https://api.nasa.gov/neo/rest/v1/";
+    public static final String DATE = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
     public void start() {
         Gson gson = new GsonBuilder().setLenient().create();
@@ -32,7 +36,7 @@ public class Controller implements Callback<AsteroidMetaData> {
                 .build();
 
         AsteroidApi asteroidApi = retrofit.create(AsteroidApi.class);
-        Call<AsteroidMetaData> call = asteroidApi.loadAsteroids("2015-09-08");
+        Call<AsteroidMetaData> call = asteroidApi.loadAsteroids(DATE);
         call.enqueue(this);
     }
 
@@ -43,16 +47,27 @@ public class Controller implements Callback<AsteroidMetaData> {
             AsteroidMetaData asteroidList = response.body();
             Log.e("zzz", "zzz call  " + asteroidList.getElementCount());
             if (asteroidList.getDateSampled() != null) {
-                Log.e("zzz", "zzz succ " + asteroidList.getDateSampled().getAsteroids().get(0).getName());
-            }
-            for (Asteroid asteroid : asteroidList.getDateSampled().getAsteroids()) {
-                if (asteroid.getIsPotentiallyHazardousAsteroid()) {
-                    Log.e("zzz", "zzz asteroid HAZARD " + asteroid.getName() + " approach date " + asteroid.getCloseApproachData().get(0).getCloseApproachDate());
+                Log.e("zzz", "zzz succ " + asteroidList.getDateSampled().size());
+                Log.e("zzz", "zzz succ " + asteroidList.getDateSampled());
+                Map<String, Asteroid[]> test = asteroidList.getDateSampled();
+                for (Asteroid[] asteroids : test.values()) {
+                    Log.e("zzz", "zzz test " + asteroids.length);
+                    for (int i = 0; i < asteroids.length; i++) {
+                        Log.e("zzz", "zzz asteroid " + i + " " + asteroids[i].getIsPotentiallyHazardousAsteroid());
+                    }
                 }
+               // Log.e("zzz", "zzz asteroids " + asteroidList.getDateSampled().getAsteroids().size());
+//                for (Asteroid asteroid : asteroidList.getDateSampled().getAsteroids()) {
+//                    if (asteroid.getIsPotentiallyHazardousAsteroid()) {
+//                        Log.e("zzz", "zzz asteroid HAZARD " + asteroid.getName() + " approach date "
+//                                + asteroid.getCloseApproachData().get(0).getCloseApproachDate()
+//                                + " SIZE " + asteroid.getEstimatedDiameter().getMeters().getEstimatedDiameterMax()
+//                                + " orbiting body + " + asteroid.getCloseApproachData().get(0).getOrbitingBody());
+//                    }
+//                }
             }
         } else {
-            Log.e("zzz", "zzz error ");
-            System.out.println(response.errorBody());
+            Log.e("zzz", "error: " + response.message());
         }
     }
 
@@ -60,6 +75,7 @@ public class Controller implements Callback<AsteroidMetaData> {
     public void onFailure(Call<AsteroidMetaData> call, Throwable t) {
         Log.e("zzz", "zzz fail  " + call.request().toString());
         Log.e("zzz", "zzz fail " + call.toString());
+        Log.e("zzz", "zzz fail " + t.getLocalizedMessage());
         t.printStackTrace();
     }
 }
