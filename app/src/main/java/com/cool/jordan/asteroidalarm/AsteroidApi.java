@@ -8,6 +8,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 interface AsteroidApi {
-    @GET("feed?&api_key=" + BuildConfig.ApiKey)
-    Call<AsteroidMetaData> loadAsteroids(@Query("start_date") String date);
+    @GET("feed?")
+    Call<AsteroidMetaData> loadAsteroids(@Query("start_date") String startDate,
+                                         @Query("end_date") String endDate,
+                                         @Query("api_key") String apiKey);
 }

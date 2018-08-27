@@ -1,9 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.cool.jordan.asteroidalarm.MainActivity"
-    android:background="#000000">
+    android:background="@color/backgroundBlack">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/main_title"
+        style="@style/TextPrimary"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/asteroid_name"
+        style="@style/TextPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="Name of the Asteroid"
+        android:text="@string/asteroid_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:text="Asteroid Name" />
+
+    <TextView
+        android:id="@+id/asteroid_distance"
+        style="@style/TextPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/asteroid_distance"
+        app:layout_constraintStart_toStartOf="@+id/asteroid_name"
+        app:layout_constraintTop_toBottomOf="@+id/asteroid_name"
+        tools:text="DISTANCE" />
+
+    <TextView
+        android:id="@+id/asteroid_diameter"
+        style="@style/TextPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/asteroid_diameter"
+        app:layout_constraintStart_toStartOf="@+id/asteroid_distance"
+        app:layout_constraintTop_toBottomOf="@+id/asteroid_distance"
+        tools:text="DIAMETER" />
+
+    <TextView
+        android:id="@+id/asteroid_name_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        style="@style/TextPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/asteroid_name"
+        app:layout_constraintStart_toEndOf="@+id/asteroid_name"
+        app:layout_constraintTop_toTopOf="@+id/asteroid_name"
+        tools:text="example name 123" />
+
+    <TextView
+        android:id="@+id/asteroid_distance_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        style="@style/TextPrimary"
+        android:text="@string/asteroid_distance_details"
+        app:layout_constraintBottom_toBottomOf="@+id/asteroid_distance"
+        app:layout_constraintStart_toEndOf="@+id/asteroid_distance"
+        app:layout_constraintTop_toTopOf="@+id/asteroid_distance"
+        tools:text="123456" />
+
+    <TextView
+        android:id="@+id/asteroid_diameter_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/asteroid_diameter_details"
+        style="@style/TextPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/asteroid_diameter"
+        app:layout_constraintStart_toEndOf="@+id/asteroid_diameter"
+        app:layout_constraintTop_toTopOf="@+id/asteroid_diameter"
+        tools:text="123" />
 </androidx.constraintlayout.widget.ConstraintLayout>

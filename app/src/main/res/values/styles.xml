@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TextPrimary" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/asteroidTitleText</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">serif-monospace</item>
+    </style>
+
+    <style name ="ToolbarStyle" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:fontFamily">serif-monospace</item>
+    </style>
+
 </resources>

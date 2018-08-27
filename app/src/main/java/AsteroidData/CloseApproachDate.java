@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Jordan on 7/15/2017.
  */
 
-public class DateSampled {
+public class CloseApproachDate {
 
     //@SerializedName("2015-09-11")
     //@Expose
