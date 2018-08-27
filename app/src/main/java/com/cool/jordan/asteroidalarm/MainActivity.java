@@ -14,6 +14,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import static com.cool.jordan.asteroidalarm.AsteroidApp.CHANNEL_ID;
+import static com.cool.jordan.asteroidalarm.AsteroidApp.DAILY_ASTEROID;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     TextView name;
@@ -24,18 +25,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView diameterDetails;
     String asteroidUrl = "";
 
+    public interface OnAsteroidCallback {
+        void onAsteroidReceived(Asteroid asteroid);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        name = findViewById(R.id.asteroid_name);
-        name.setOnClickListener(this);
-        nameDetails = findViewById(R.id.asteroid_name_detail);
-        distance = findViewById(R.id.asteroid_distance);
-        name.setOnClickListener(this);
-        distanceDetails = findViewById(R.id.asteroid_distance_detail);
-        diameter = findViewById(R.id.asteroid_diameter);
-        diameterDetails = findViewById(R.id.asteroid_diameter_detail);
+        setViews();
 
         Controller controller = new Controller();
         controller.setAsteroidCallbackListener(new OnAsteroidCallback() {
@@ -45,15 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         controller.start();
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("WARNING: Potentially Hazardous Asteroid")
-                .setContentText("Hazardous Asteroid Approaching in 7 days")
-                .setSound(Uri.parse("android.resource://" + this.getPackageName() + "/" + R.raw.alert))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setLights(Color.RED, 1000, 250);
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(675, mBuilder.build());
     }
 
     public void setAsteroidOfTheDay(Asteroid asteroid) {
@@ -73,10 +62,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-    public interface OnAsteroidCallback {
-        void onAsteroidReceived(Asteroid asteroid);
+    private void setViews() {
+        name = findViewById(R.id.asteroid_name);
+        name.setOnClickListener(this);
+        nameDetails = findViewById(R.id.asteroid_name_detail);
+        distance = findViewById(R.id.asteroid_distance);
+        name.setOnClickListener(this);
+        distanceDetails = findViewById(R.id.asteroid_distance_detail);
+        diameter = findViewById(R.id.asteroid_diameter);
+        diameterDetails = findViewById(R.id.asteroid_diameter_detail);
     }
-
 
 }
 

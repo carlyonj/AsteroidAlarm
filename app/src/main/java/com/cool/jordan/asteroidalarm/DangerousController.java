@@ -1,5 +1,7 @@
 package com.cool.jordan.asteroidalarm;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Jordan on 7/8/2017.
  */
 
-public class Controller implements Callback<AsteroidMetaData> {
+public class DangerousController implements Callback<AsteroidMetaData> {
     private static final String BASE_URL = "https://api.nasa.gov/neo/rest/v1/";
     private MainActivity.OnAsteroidCallback onAsteroidCallback;
 
@@ -32,11 +34,10 @@ public class Controller implements Callback<AsteroidMetaData> {
                 .build();
 
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, 2);
+        cal.add(Calendar.DAY_OF_MONTH, 7);
         String startDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        String endDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
         AsteroidApi asteroidApi = retrofit.create(AsteroidApi.class);
-        Call<AsteroidMetaData> call = asteroidApi.loadAsteroids(startDate, endDate, BuildConfig.ApiKey);
+        Call<AsteroidMetaData> call = asteroidApi.loadAsteroids(startDate, startDate, BuildConfig.ApiKey);
         call.enqueue(this);
     }
 
@@ -46,13 +47,20 @@ public class Controller implements Callback<AsteroidMetaData> {
             AsteroidMetaData asteroidList = response.body();
             if (asteroidList != null && asteroidList.getDateSampled() != null) {
                 Map<String, Asteroid[]> day = asteroidList.getDateSampled();
-                for (Asteroid[] asteroids : day.values()) {
-                    if (asteroids[0] != null) {
-                        onAsteroidCallback.onAsteroidReceived(asteroids[0]);
-                        return;
+                Asteroid[] asteroidsForDay = day.values().iterator().next();
+                for (Asteroid asteroid : asteroidsForDay) {
+                    if (asteroid.getIsPotentiallyHazardousAsteroid()) {
+                        String distanceString = asteroid.getCloseApproachData().get(0)
+                                .getMissDistance().getLunar()
+                                .substring(0, 6);
+                        if (Double.parseDouble(distanceString) < 10) {
+                            AsteroidApp.sendNotification();
+                        }
                     }
                 }
             }
+        } else {
+            Log.e("zzz", "error: " + response.message());
         }
     }
 
