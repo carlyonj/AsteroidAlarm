@@ -16,14 +16,15 @@ public class AsteroidApp extends Application {
     public static final String CHANNEL_ID = "ASTEROID_ALARM_0";
     public static final int DANGEROUS_ASTEROID = 4001;
     public static final int DAILY_ASTEROID = 4002;
-    private static Context context;
+    public static final String ASTEROID_PREF = "asteroid_pref";
+    public static final String DAILY_KEY = "asteroid_daily";
 
     @Override
     public void onCreate() {
         super.onCreate();
-        AsteroidApp.context = getApplicationContext();
         createNotificationChannel();
-        AsteroidJobService.initializeJobService(this);
+        AsteroidJobService.initializeDangerousCheck(this);
+        AsteroidJobService.initializeDailyCheck(this);
     }
 
     private void createNotificationChannel() {
@@ -50,7 +51,7 @@ public class AsteroidApp extends Application {
         }
     }
 
-    public static void sendNotification() {
+    public static void sendNotification(Context context) {
         if (context != null) {
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_launcher)

@@ -1,5 +1,8 @@
 package com.cool.jordan.asteroidalarm;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -23,8 +26,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Controller implements Callback<AsteroidMetaData> {
     private static final String BASE_URL = "https://api.nasa.gov/neo/rest/v1/";
     private MainActivity.OnAsteroidCallback onAsteroidCallback;
+    Context context;
 
-    public void start() {
+    public void start(Context context) {
+        this.context = context;
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -48,7 +53,14 @@ public class Controller implements Callback<AsteroidMetaData> {
                 Map<String, Asteroid[]> day = asteroidList.getDateSampled();
                 for (Asteroid[] asteroids : day.values()) {
                     if (asteroids[0] != null) {
-                        onAsteroidCallback.onAsteroidReceived(asteroids[0]);
+                        Gson gson = new Gson();
+                        SharedPreferences sharedPreferences = context.getSharedPreferences(AsteroidApp.ASTEROID_PREF, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(AsteroidApp.DAILY_KEY, gson.toJson(asteroids[0]));
+                        editor.apply();
+                        if (onAsteroidCallback != null) {
+                            onAsteroidCallback.onAsteroidReceived(asteroids[0]);
+                        }
                         return;
                     }
                 }

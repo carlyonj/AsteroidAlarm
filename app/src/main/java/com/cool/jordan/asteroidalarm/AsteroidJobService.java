@@ -11,6 +11,7 @@ import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.cool.jordan.asteroidalarm.AsteroidApp.DAILY_ASTEROID;
 import static com.cool.jordan.asteroidalarm.AsteroidApp.DANGEROUS_ASTEROID;
 
 public class AsteroidJobService extends JobService {
@@ -19,10 +20,23 @@ public class AsteroidJobService extends JobService {
         super();
     }
 
-    public static void initializeJobService(Application app) {
+    public static void initializeDangerousCheck(Application app) {
         JobScheduler jobScheduler = (JobScheduler) app.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         ComponentName name = new ComponentName(app, AsteroidJobService.class);
         JobInfo info = new JobInfo.Builder(DANGEROUS_ASTEROID, name)
+                .setPeriodic(TimeUnit.DAYS.toMillis(1))
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setRequiresCharging(false)
+                .setPersisted(true)
+                .build();
+        if (jobScheduler != null) {
+            jobScheduler.schedule(info);
+        }
+    }
+    public static void initializeDailyCheck(Application app) {
+        JobScheduler jobScheduler = (JobScheduler) app.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        ComponentName name = new ComponentName(app, AsteroidJobService.class);
+        JobInfo info = new JobInfo.Builder(DAILY_ASTEROID, name)
                 .setPeriodic(TimeUnit.DAYS.toMillis(1))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setRequiresCharging(false)
@@ -37,8 +51,12 @@ public class AsteroidJobService extends JobService {
     public boolean onStartJob(JobParameters jobParameters) {
         switch (jobParameters.getJobId()) {
             case DANGEROUS_ASTEROID:
-                DangerousController controller = new DangerousController();
-                controller.start();
+                DangerousController dangerousController = new DangerousController(this);
+                dangerousController.start();
+                return true;
+            case DAILY_ASTEROID:
+                Controller controller = new Controller();
+                controller.start(this);
                 return true;
             default:
                 Log.e("Faulty error thing", "Error bad job " + jobParameters.getJobId());

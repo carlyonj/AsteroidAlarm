@@ -1,12 +1,17 @@
 package com.cool.jordan.asteroidalarm;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import AsteroidData.Asteroid;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +47,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setAsteroidOfTheDay(asteroid);
             }
         });
-        controller.start();
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences(AsteroidApp.ASTEROID_PREF, Context.MODE_PRIVATE);
+        String asteroidJson = sharedPreferences.getString(AsteroidApp.DAILY_KEY, "");
+        Gson gson = new Gson();
+        Asteroid dailyAsteroid = gson.fromJson(asteroidJson, Asteroid.class);
+        if (dailyAsteroid != null) {
+            setAsteroidOfTheDay(dailyAsteroid);
+        }
     }
 
     public void setAsteroidOfTheDay(Asteroid asteroid) {
@@ -66,11 +78,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         name = findViewById(R.id.asteroid_name);
         name.setOnClickListener(this);
         nameDetails = findViewById(R.id.asteroid_name_detail);
+        nameDetails.setOnClickListener(this);
         distance = findViewById(R.id.asteroid_distance);
-        name.setOnClickListener(this);
+        distance.setOnClickListener(this);
         distanceDetails = findViewById(R.id.asteroid_distance_detail);
+        distanceDetails.setOnClickListener(this);
         diameter = findViewById(R.id.asteroid_diameter);
+        diameter.setOnClickListener(this);
         diameterDetails = findViewById(R.id.asteroid_diameter_detail);
+        diameterDetails.setOnClickListener(this);
     }
 
 }

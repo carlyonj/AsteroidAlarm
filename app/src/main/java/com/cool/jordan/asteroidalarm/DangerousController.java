@@ -1,5 +1,6 @@
 package com.cool.jordan.asteroidalarm;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -25,6 +26,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DangerousController implements Callback<AsteroidMetaData> {
     private static final String BASE_URL = "https://api.nasa.gov/neo/rest/v1/";
     private MainActivity.OnAsteroidCallback onAsteroidCallback;
+    private Context context;
+
+    DangerousController(Context context) {
+        this.context = context;
+    }
 
     public void start() {
         Gson gson = new GsonBuilder().setLenient().create();
@@ -54,7 +60,7 @@ public class DangerousController implements Callback<AsteroidMetaData> {
                                 .getMissDistance().getLunar()
                                 .substring(0, 6);
                         if (Double.parseDouble(distanceString) < 10) {
-                            AsteroidApp.sendNotification();
+                            AsteroidApp.sendNotification(context);
                         }
                     }
                 }
