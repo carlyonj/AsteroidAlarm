@@ -4,10 +4,17 @@
     <string name="channel_description">Near Earth Object is approaching Earth</string>
 
     // Main Activity
-    <string name="main_title">Asteroid Of The Day</string>
+    <string name="main_title">Nearest Asteroid To Earth</string>
     <string name="asteroid_name">Name: </string>
     <string name="asteroid_distance">Distance: </string>
+    <string name="asteroid_velocity">Velocity: </string>
     <string name="asteroid_diameter">Diameter: </string>
+    <string name="asteroid_orbiting_body">Orbiting Body: </string>
     <string name="asteroid_distance_details">%1$s km</string>
     <string name="asteroid_diameter_details">%1$s m</string>
+    <string name="asteroid_velocity_details">%1$s km/s</string>
+
+    // Notification
+    <string name="notification_title">Emergency Alert</string>
+    <string name="notification_detail">Asteroid Impact Warning in effect: potential impact on </string>
 </resources>

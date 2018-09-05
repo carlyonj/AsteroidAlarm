@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import androidx.collection.ArrayMap;
+
 /**
  * Created by Jordan on 7/8/2017.
  */
@@ -21,7 +23,7 @@ public class AsteroidMetaData {
     private Integer elementCount;
     @SerializedName("near_earth_objects")
     @Expose
-    private Map<String, Asteroid[]> dateSampled;
+    private ArrayMap<String, Asteroid[]> dateSampled;
 //
 //    public List<Links> getLinks() {
 //        return links;
@@ -39,11 +41,11 @@ public class AsteroidMetaData {
         this.elementCount = elementCount;
     }
 
-    public Map<String, Asteroid[]> getDateSampled() {
+    public ArrayMap<String, Asteroid[]> getDateSampled() {
         return dateSampled;
     }
 
-    public void setDateSampled(Map<String, Asteroid[]> asteroids) {
+    public void setDateSampled(ArrayMap<String, Asteroid[]> asteroids) {
         this.dateSampled = asteroids;
     }
 

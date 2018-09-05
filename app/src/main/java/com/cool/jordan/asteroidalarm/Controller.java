@@ -37,7 +37,7 @@ public class Controller implements Callback<AsteroidMetaData> {
                 .build();
 
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, 2);
+        cal.add(Calendar.DAY_OF_MONTH, 6);
         String startDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String endDate = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
         AsteroidApi asteroidApi = retrofit.create(AsteroidApi.class);
@@ -52,20 +52,37 @@ public class Controller implements Callback<AsteroidMetaData> {
             if (asteroidList != null && asteroidList.getDateSampled() != null) {
                 Map<String, Asteroid[]> day = asteroidList.getDateSampled();
                 for (Asteroid[] asteroids : day.values()) {
-                    if (asteroids[0] != null) {
+                    // This should find an asteroid and return but if not we will continue going
+                    // to further dates.
+                    if (asteroids.length > 0) {
+                        Asteroid nearest = getNearestAsteroid(asteroids);
                         Gson gson = new Gson();
                         SharedPreferences sharedPreferences = context.getSharedPreferences(AsteroidApp.ASTEROID_PREF, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(AsteroidApp.DAILY_KEY, gson.toJson(asteroids[0]));
+                        editor.putString(AsteroidApp.DAILY_KEY, gson.toJson(nearest));
                         editor.apply();
                         if (onAsteroidCallback != null) {
-                            onAsteroidCallback.onAsteroidReceived(asteroids[0]);
+                            onAsteroidCallback.onAsteroidReceived(nearest);
                         }
                         return;
                     }
                 }
             }
         }
+    }
+
+    private Asteroid getNearestAsteroid(Asteroid[] asteroids) {
+        Asteroid nearest = asteroids[0];
+        for (Asteroid asteroid : asteroids) {
+            Double newMissDistance = Double.parseDouble(asteroid.getCloseApproachData().get(0)
+                    .getMissDistance().getAstronomical().substring(0, 8));
+            Double missDistance = Double.parseDouble(nearest.getCloseApproachData().get(0)
+                    .getMissDistance().getAstronomical().substring(0, 8));
+            if (newMissDistance < missDistance) {
+                nearest = asteroid;
+            }
+        }
+        return nearest;
     }
 
     @Override

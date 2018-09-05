@@ -46,15 +46,37 @@
         tools:text="DISTANCE" />
 
     <TextView
+        android:id="@+id/asteroid_velocity"
+        style="@style/TextPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/asteroid_velocity"
+        app:layout_constraintStart_toStartOf="@+id/asteroid_distance"
+        app:layout_constraintTop_toBottomOf="@+id/asteroid_distance"
+        tools:text="DISTANCE" />
+
+    <TextView
         android:id="@+id/asteroid_diameter"
         style="@style/TextPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/asteroid_diameter"
-        app:layout_constraintStart_toStartOf="@+id/asteroid_distance"
-        app:layout_constraintTop_toBottomOf="@+id/asteroid_distance"
+        app:layout_constraintStart_toStartOf="@+id/asteroid_velocity"
+        app:layout_constraintTop_toBottomOf="@+id/asteroid_velocity"
         tools:text="DIAMETER" />
+
+    <TextView
+        android:id="@+id/asteroid_orbiting_body"
+        style="@style/TextPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/asteroid_orbiting_body"
+        app:layout_constraintStart_toStartOf="@+id/asteroid_diameter"
+        app:layout_constraintTop_toBottomOf="@+id/asteroid_diameter"
+        tools:text="ORBITING" />
 
     <TextView
         android:id="@+id/asteroid_name_detail"
@@ -80,6 +102,18 @@
         tools:text="123456" />
 
     <TextView
+        android:id="@+id/asteroid_velocity_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        style="@style/TextPrimary"
+        android:text="@string/asteroid_distance_details"
+        app:layout_constraintBottom_toBottomOf="@+id/asteroid_velocity"
+        app:layout_constraintStart_toEndOf="@+id/asteroid_velocity"
+        app:layout_constraintTop_toTopOf="@+id/asteroid_velocity"
+        tools:text="123456" />
+
+    <TextView
         android:id="@+id/asteroid_diameter_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,4 +124,16 @@
         app:layout_constraintStart_toEndOf="@+id/asteroid_diameter"
         app:layout_constraintTop_toTopOf="@+id/asteroid_diameter"
         tools:text="123" />
+
+    <TextView
+        android:id="@+id/asteroid_orbiting_body_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        style="@style/TextPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/asteroid_orbiting_body"
+        app:layout_constraintStart_toEndOf="@+id/asteroid_orbiting_body"
+        app:layout_constraintTop_toTopOf="@+id/asteroid_orbiting_body"
+        tools:text="Earth" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
